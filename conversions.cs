@@ -19,18 +19,19 @@ namespace TCore.Util
 
         public static int GetDSTAdjust(DateTime dttm)
         {
-            int[] rgdstBeginMonth = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
-            int[] rgdstBeginDay = {9, 10, 11, 13, 14, 13, 11, 10, 9, 8};
-            int[] rgdstEndMonth = {11, 11, 11, 11, 11, 11, 11, 11, 11, 11};
-            int[] rgdstEndDay = {2, 3, 4, 6, 7, 6, 4, 3, 2, 1};
+            int nYearFirst = 2017;
+            int[] rgdstBeginMonth = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+            int[] rgdstBeginDay = {12, 13, 8, 9, 10, 11, 13, 14, 13, 11, 10, 9, 8};
+            int[] rgdstEndMonth = {11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11};
+            int[] rgdstEndDay = {5, 6, 1, 2, 3, 4, 6, 7, 6, 4, 3, 2, 1};
 
-            int i = 2014 - dttm.Year;
+            int i = nYearFirst - dttm.Year;
 
             if (i < 0 || i > rgdstBeginMonth.Length)
                 throw new Exception(String.Format("DST NOT IMPLEMENTED FOR YEAR {0}", dttm.Year));
 
-            DateTime dttmBegin = new DateTime(2014 - i, rgdstBeginMonth[i], rgdstBeginDay[i], 3, 0, 0);
-            DateTime dttmEnd = new DateTime(2014 - i, rgdstEndMonth[i], rgdstEndDay[i], 2, 0, 0);
+            DateTime dttmBegin = new DateTime(nYearFirst - i, rgdstBeginMonth[i], rgdstBeginDay[i], 3, 0, 0);
+            DateTime dttmEnd = new DateTime(nYearFirst - i, rgdstEndMonth[i], rgdstEndDay[i], 2, 0, 0);
 
             if (dttm.CompareTo(dttmBegin) > 0
                 && dttm.CompareTo(dttmEnd) < 0)
@@ -49,6 +50,7 @@ namespace TCore.Util
         [TestCase("3/9/2014 1:00", 0)]
         [TestCase("3/9/2014 2:00", 0)]
         [TestCase("3/9/2014 3:01", 60)]
+        [TestCase("3/13/2016 3:01", 60)]
         public static void TestGetDSTAdjust(string sDttm, int nExpected)
         {
             DateTime dttm = DateTime.Parse(sDttm);

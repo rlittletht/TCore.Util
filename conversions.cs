@@ -9,6 +9,63 @@ namespace TCore.Util
 {
     public class Conversions
     {
+        public static DateTime? DttmFromString(string sDateTime, int nUtcOffset, bool fAdjustDST)
+        {
+            DateTime? dttm;
+
+            if (sDateTime == null || sDateTime == "")
+                return null;
+
+            try
+                {
+                dttm = DateTime.Parse(sDateTime);
+                return DttmUTCFromDttm(dttm.Value, nUtcOffset, fAdjustDST);
+                }
+            catch
+                {
+                return null;
+                }
+        }
+
+        public static int NFromString(string s, int nDefault)
+        {
+            if (s == null || s == "")
+                return nDefault;
+
+            try
+                {
+                return Int32.Parse(s);
+                }
+            catch
+                {
+                return nDefault;
+                }
+        }
+
+        public static Guid? GuidFromString(string sGuid)
+        {
+            if (sGuid == null || sGuid == "")
+                return null;
+
+            try
+                {
+                return new Guid(sGuid);
+                }
+            catch {}
+
+            return null;
+        }
+
+        public static bool BoolFromString(string s)
+        {
+            if (s == null || s == "")
+                return false;
+
+            if (s == "1" || String.Compare(s, "true", true) == 0)
+                return true;
+
+            return false;
+        }
         public static DateTime DttmFromDttmUTC(DateTime dttm, int nUTCOffset, bool fDST)
         {
             if (fDST)
@@ -70,63 +127,6 @@ namespace TCore.Util
                 nUTCOffset += GetDSTAdjust(dttm);
 
             return dttm.AddMinutes(-nUTCOffset);
-        }
-        public static DateTime? DttmFromString(string sDateTime, int nUtcOffset, bool fAdjustDST)
-        {
-            DateTime? dttm;
-
-            if (sDateTime == null || sDateTime == "")
-                return null;
-
-            try
-                {
-                dttm = DateTime.Parse(sDateTime);
-                return DttmUTCFromDttm(dttm.Value, nUtcOffset, fAdjustDST);
-                }
-            catch
-                {
-                return null;
-                }
-        }
-
-        public static int NFromString(string s, int nDefault)
-        {
-            if (s == null || s == "")
-                return nDefault;
-
-            try
-                {
-                return Int32.Parse(s);
-                }
-            catch
-                {
-                return nDefault;
-                }
-        }
-
-        public static Guid? GuidFromString(string sGuid)
-        {
-            if (sGuid == null || sGuid == "")
-                return null;
-
-            try
-                {
-                return new Guid(sGuid);
-                }
-            catch {}
-
-            return null;
-        }
-
-        public static bool BoolFromString(string s)
-        {
-            if (s == null || s == "")
-                return false;
-
-            if (s == "1" || String.Compare(s, "true", true) == 0)
-                return true;
-
-            return false;
         }
     }
 }

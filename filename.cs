@@ -21,13 +21,8 @@ namespace TCore.Util
                 sBaseName = "";
 
             if (sExt == null)
-                return String.Format("{0}\\{1}{2}", Environment.GetEnvironmentVariable("Temp"),
-                                     sBaseName,
-                                     System.Guid.NewGuid().ToString());
-            return String.Format("{0}\\{1}{2}.{3}", Environment.GetEnvironmentVariable("Temp"),
-                                     sBaseName,
-                                     System.Guid.NewGuid().ToString(),
-                                     sExt);
+                return $"{Environment.GetEnvironmentVariable("Temp")}\\{sBaseName}{System.Guid.NewGuid().ToString()}";
+            return $"{Environment.GetEnvironmentVariable("Temp")}\\{sBaseName}{System.Guid.NewGuid().ToString()}.{sExt}";
         }
 
 

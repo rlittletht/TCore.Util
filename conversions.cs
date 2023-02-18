@@ -85,7 +85,7 @@ namespace TCore.Util
             int i = nYearFirst - dttm.Year;
 
             if (i < 0 || i > rgdstBeginMonth.Length)
-                throw new Exception(String.Format("DST NOT IMPLEMENTED FOR YEAR {0}", dttm.Year));
+                throw new Exception($"DST NOT IMPLEMENTED FOR YEAR {dttm.Year}");
 
             DateTime dttmBegin = new DateTime(nYearFirst - i, rgdstBeginMonth[i], rgdstBeginDay[i], 3, 0, 0);
             DateTime dttmEnd = new DateTime(nYearFirst - i, rgdstEndMonth[i], rgdstEndDay[i], 2, 0, 0);
